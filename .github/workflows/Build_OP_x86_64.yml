@@ -4,8 +4,9 @@
 # Author: eSirPlayground
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
+#感谢 eSir P3TERX GXNAS。
 
-name: Build_x86_64
+name: Build_openwrt_x86_64
 
 on: 
   release:
@@ -17,9 +18,9 @@ on:
 
   #schedule:
   #  - cron: 0 8 * * 5
-  
-  #watch:
-  #  types: [started]
+  #点击开始才能编译
+  watch:
+    types: [started]
 
 jobs:
   build:
@@ -29,7 +30,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Initialization environment
+    - name: 设置编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -59,8 +60,11 @@ jobs:
 
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/coolsnowwolf/lede
-        REPO_BRANCH: master
+        LEDE: https://github.com/coolsnowwolf/lede
+        LIENOL: https://github.com/Lienol/openwrt
+        GITURL: https://github.com/${{github.repository}}
+        TZ: Asia/Shanghai
+        #REPO_BRANCH: master
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
